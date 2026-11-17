@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090d1b">
+  <title>SPEED TYPER — Online</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#"><span class="brand-mark">⌨</span> SPEED<span>TYPER</span></a>
+      <button class="ghost" id="settingsBtn">⚙ Verbindung</button>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">✦ ONLINE TYPING BATTLE</div>
+      <h1>TIPPE SCHNELLER.<br><span>GEWINNE DAS RENNEN.</span></h1>
+      <p>Erstelle einen Raum oder tritt mit einem Spielcode bei.</p>
+    </section>
+
+    <section class="panel" id="homePanel">
+      <div class="two-col">
+        <article class="mode-card">
+          <div class="mode-icon">🚀</div>
+          <h2>Raum erstellen</h2>
+          <p>Starte ein Rennen und teile deinen Spielcode mit Freunden.</p>
+          <label for="hostName">Dein Spielername</label>
+          <input id="hostName" maxlength="18" placeholder="z. B. TurboTiger">
+          <button class="primary" id="createBtn">Raum erstellen <span>→</span></button>
+        </article>
+        <article class="mode-card">
+          <div class="mode-icon">🔑</div>
+          <h2>Spielcode eingeben</h2>
+          <p>Gib den Code deines Freundes ein, um seinem Raum beizutreten.</p>
+          <label for="joinName">Dein Spielername</label>
+          <input id="joinName" maxlength="18" placeholder="z. B. BlitzFuchs">
+          <label for="roomCode">Spielcode</label>
+          <input id="roomCode" class="code-input" maxlength="6" inputmode="numeric" placeholder="000000">
+          <button class="primary" id="joinBtn">Beitreten <span>→</span></button>
+        </article>
+      </div>
+      <div class="connection-note" id="connectionNote">⚪ Verbindung noch nicht eingerichtet – tippe oben auf „Verbindung“.</div>
+    </section>
+
+    <section class="panel room-panel hidden" id="roomPanel">
+      <div class="room-head">
+        <div><div class="eyebrow">DEIN SPIELRAUM</div><h2>Spielcode: <strong id="shownCode">------</strong></h2></div>
+        <button class="ghost" id="copyCodeBtn">⧉ Code kopieren</button>
+      </div>
+      <p class="muted">Teile diesen Code mit deinen Freunden.</p>
+      <div class="players-wrap">
+        <div class="section-label">SPIELER IM RAUM <span id="playerCount">0</span></div>
+        <div id="playersList" class="players-list"></div>
+      </div>
+      <div id="hostControls">
+        <button class="primary" id="startBtn">Rennen starten <span>→</span></button>
+        <p class="tiny">Der Raum-Ersteller startet das Rennen, wenn alle bereit sind.</p>
+      </div>
+      <div id="guestWaiting" class="waiting hidden">⏳ Warte, bis der Raum-Ersteller das Rennen startet …</div>
+      <button class="text-btn" id="leaveBtn">Raum verlassen</button>
+    </section>
+
+    <section class="panel race-panel hidden" id="racePanel">
+      <div class="race-top">
+        <div><div class="eyebrow">LIVE-RENNEN</div><h2>Tippe den Text so schnell du kannst!</h2></div>
+        <div class="timer"><span id="timer">0</span><small>SEK.</small></div>
+      </div>
+      <div id="raceText" class="race-text"></div>
+      <textarea id="typingInput" rows="4" placeholder="Hier beginnt dein Rennen …" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+      <div class="stats">
+        <div><strong id="wpm">0</strong><small>WÖRTER / MIN.</small></div>
+        <div><strong id="accuracy">100%</strong><small>GENAUIGKEIT</small></div>
+        <div><strong id="progress">0%</strong><small>FORTSCHRITT</small></div>
+      </div>
+      <div class="section-label">LIVE-RANGLISTE</div>
+      <div id="racePlayers" class="players-list"></div>
+      <div id="finishMessage" class="finish hidden"></div>
+      <button class="text-btn" id="backToRoomBtn">Zurück zum Raum</button>
+    </section>
+
+    <footer>Ein kleines Community-Spiel · Spiele fair und hab Spaß.</footer>
+  </main>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" id="settingsForm">
+      <div class="dialog-head"><div><div class="eyebrow">EINMALIG EINRICHTEN</div><h2>Online-Verbindung</h2></div><button class="close" value="cancel" aria-label="Schließen">×</button></div>
+      <p class="muted">Für echte Online-Räume brauchst du ein Supabase-Projekt. Trage hier Projekt-URL und Publishable Key ein.</p>
+      <label for="supabaseUrl">Supabase Project URL</label>
+      <input id="supabaseUrl" type="url" placeholder="https://deinprojekt.supabase.co">
+      <label for="supabaseKey">Publishable / anon Key</label>
+      <input id="supabaseKey" type="text" placeholder="sb_publishable_… oder anon key">
+      <button class="primary" id="saveSettingsBtn" value="save">Speichern & verbinden</button>
+      <p class="tiny">Verwende nur den öffentlichen Publishable-/anon-Key, niemals einen Secret- oder service_role-Key.</p>
+      <div id="settingsStatus" class="tiny"></div>
+    </form>
+  </dialog>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
